@@ -1,2 +1,4 @@
 # bashinstall
-My dotfiles and a bash script to setup my computer
+This is mostly a script to configure and install everything I use on my computer with just one script. It also has another script to make a copy of the desired configs.
+
+## Usage
