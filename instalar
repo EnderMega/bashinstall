@@ -1,0 +1,85 @@
+# Feito para Linux Mint, por EnderMega
+# chmod +x instalar
+# ./instalar [w = copiar pasta de Imagens/, papél de parede] ...
+
+# Mensagens
+vermelho=$(tput setaf 1)
+bold=$(tput bold)
+reset=$(tput sgr0)
+# Extra
+amarelo=$(tput setaf 3)
+verde=$(tput setaf 2)
+azul=$(tput setaf 4)
+
+DIR=$(dirname "$(readlink -f "$0")")
+
+#  Sair ao dar erro (sei lá). Pelo visto é que normalmente
+# com erros não fatais não sai sózinho, continua o resto do script.
+# Com isso, se algum coisa retornar não 0 vai sair.
+set -e
+
+if [[ $# -eq 0 ]]; then
+	echo "${bold}${amarelo}Nem um argumento foi passado. Você pode executar novamente, sem riscos, se deseja utilizar algum."
+	echo "Não tem lista bonitinha de argumentos, então se vira lendo \"# Argumentos\", kkk.${reset}"
+fi
+
+echo "${bold}${vermelho}> Atualizando sistema${reset}"
+sudo apt update && sudo apt upgrade -y
+
+echo "${bold}${vermelho}> Adicionando repositórios${reset}"
+# Acho que vou manter os repositórios dentro de código mesmo, não tem muitos e o nome é meio torto.
+# Também não acredito que vou modificar tanto quanto diretórios e programas.
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
+sudo add-apt-repository -y ppa:aslatter/ppa	# Alacritty, isso concerta o problema de enter e backspace duplicado.
+
+
+sudo apt update
+
+echo "${bold}${vermelho}> Instalando coisas:${reset}"
+sudo apt install -y $(grep -vE '^\s*#|^\s*$' programas.txt)
+
+echo "${bold}${vermelho}> Copiando configs${reset}"
+while IFS= read -r pasta; do
+	[[ -z "$pasta" || "$pasta" =~ ^# ]] && continue
+	#cp -r dotfiles/i3 ~/.config/
+	#cp -r dotfiles/picom ~/.config/
+	cp -r "$DIR/dotfiles/$pasta" "$HOME/.config/"
+	echo "$pasta copiada."
+done < dirconfigs.txt
+
+# Para poder mudar o brilho da tela
+sudo usermod -aG video $USER
+
+#i3-msg restart
+
+echo "${bold}${vermelho}> Criando pastas${reset}"
+mkdir -p "$HOME/projcpp/projetos/meus"
+mkdir -p "$HOME/projcpp/projetos/outros"
+mkdir -p "$HOME/projcpp/extra"
+
+# Argumentos
+for arg in "$@"; do
+	if [[ "$arg" == "w" ]]; then
+		echo "${azul}> Copiando papeis de parede${reset}"
+		cp -r "$DIR/extra/Imagens" "$HOME/"
+	# elif [[ ~ ]]; then
+	#	Outros argumentos.
+	else
+		continue
+	fi
+done
+
+# Extra 2
+cp "$DIR/extra/40-libinput.conf" "/usr/share/X11/xorg.conf.d/"
+echo -e "\nGTK_IM_MODULE=xim" | tee -a /etc/environment > /dev/null
+cp "$DIR/extra/.bashrc" "$HOME/"
+
+# *Limpagem*
+echo "${bold}${vermelho}Limpagem${reset}"
+sudo apt autoremove -y
+sudo apt clean
+
+echo "${bold}${vermelho}Algumas configurações talvez requeiram que a sessão seja reiniciada.${reset}"
+# Vou deixar sem pois até que ficou melhor, mas eu não sei como colocar itálico e negrito ao mesmo tempo.
+echo -e "\e[3m${verde}Acabô :D\e[0m${reset}"

@@ -1,0 +1,55 @@
+# Copiar configs para o *instalador*. Equivalente de criar um backup.
+# Bruh, nos argumentos w tem que vir antes de b.
+
+DIR=$(dirname "$(readlink -f "$0")")
+BACKUP=${DIR}/backup
+
+# Só de segurança vamos "criar" as pastas, as subpastas são sempre copiadas.
+mkdir -p backup
+mkdir -p dotfiles
+mkdir -p extra
+
+rm -rf "$DIR/backup/"*
+cp -r "$DIR/dotfiles/" $BACKUP
+cp -r "$DIR/extra/" $BACKUP
+
+while IFS= read -r pasta; do
+	[[ -z "$pasta" || "$pasta" =~ ^# ]] && continue
+	sudo cp -r "$HOME/.config/$pasta" "$DIR/dotfiles/"
+done < dirconfigs.txt
+
+cp "/usr/share/X11/xorg.conf.d/40-libinput.conf" "$DIR/extra/"
+
+cp "$HOME/.bashrc" "$DIR/extra"
+
+w=false
+b=false
+
+# Argumentos
+for arg in "$@"; do
+	case "$arg" in
+		w) w=true ;;
+		b) b=true ;;
+		*) ;;
+	esac
+	# if [[ "$arg" == "w" ]]; then
+	# 	cp -r "$HOME/Imagens" "$DIR/extra/"
+	# elif [[ "$arg" == "b" ]]; then
+	# 	rm -rf "$DIR/backup/"*
+	# 	cp -r "$DIR/dotfiles/" $BACKUP
+	# 	cp -r "$DIR/extra/" $BACKUP
+	# else
+	# 	continue
+	# fi
+done
+
+# Tem que fazer fora do loop e separado por conta do sistema de backup simultâneo.
+if $w; then
+	cp -r "$HOME/Imagens" "$DIR/extra/"
+fi
+
+if $b; then
+	rm -rf "$DIR/backup/"*
+	cp -r "$DIR/dotfiles/" $BACKUP
+	cp -r "$DIR/extra/" $BACKUP
+fi

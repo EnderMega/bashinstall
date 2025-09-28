@@ -1,0 +1,19 @@
+# Esse arquivo é para os programas a serem instalados.
+# O nome deles deve ser escrito na mesma forma do `sudo apt install ~`.
+
+# Dev
+neovim
+git
+
+# Programas
+alacritty
+
+# Sistema
+i3
+picom
+rofi
+nitrogen
+brightnessctl
+pipewire
+udiskie
+fastfetch

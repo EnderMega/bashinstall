@@ -1,0 +1,9 @@
+program_options:
+  notify: true
+  file_manager: nemo
+
+notifications:
+  device_mounted: true
+  device_added: false
+  device_unmounted: true
+  device_remove: true

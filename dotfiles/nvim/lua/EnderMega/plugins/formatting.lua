@@ -1,0 +1,32 @@
+-- EU ODEIO ISSO. LITERALMENTE QUEBROU UM CÓDIGO MEU, *FORMATANDO* ELE E TAMBÉM FORMATOU DE UMA FORMA ESTÚPIDA.
+-- EU :wq E ELE SALVOU COM A FORMATAÇÃO ... EU NÃO TIVE COMO DESFAZER. Ai eu tive que desperdiçar meu tempo concertando, eee!!!
+return {
+-- 	"stevearc/conform.nvim",
+-- 	event = { "BufReadPre", "BufNewFile" },
+-- 	config = function()
+-- 		local conform = require("conform")
+--
+-- 		conform.setup({
+-- 			formatters_by_ft = {
+-- 				cpp = { "clang-format" },
+-- 				c = { "clang-format" },
+-- 				-- markdown = { "prettier" },
+-- 				lua = { "stylua" },
+-- 				python = { "isort", "black" },
+-- 			},
+-- 			format_on_save = {
+-- 				lsp_fallback = true,
+-- 				async = false,
+-- 				timeout_ms = 1000,
+-- 			},
+-- 		})
+--
+-- 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+-- 			conform.format({
+-- 				lsp_fallback = true,
+-- 				async = false,
+-- 				timeout_ms = 1000,
+-- 			})
+-- 		end, { desc = "Format file or range (in visual mode)" })
+-- 	end,
+}

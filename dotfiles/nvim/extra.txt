@@ -1,0 +1,5 @@
+Caso eu tenha dúvida de algum remap, pode ditigar :map que ele mostra todos os
+MEUS remaps. Além de que pode fazer coisas como :nmap, para modo normal, etc.
+
+gw -> Formatar
+gwpi

@@ -1,0 +1,10 @@
+# Esse arquivo é para as pastas de configurações a serem copiadas.
+# O nome deve ser o mesmo nome do `.config` / `dotfiles`.
+
+alacritty
+extra
+i3
+nitrogen
+nvim
+picom
+udiskie
