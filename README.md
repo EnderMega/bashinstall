@@ -16,3 +16,4 @@ If you want to copy your configs you just need to modify `programas.txt`, with t
 
 ## TODO
 - [ ] More argument options
+- [ ] Add a more modular way to import configs outside of `.config` (make directories, copying to installer and "installing" to system)
